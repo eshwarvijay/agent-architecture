@@ -1,9 +1,0 @@
----
-description: Agentic design patterns reference — read when designing AI-agent architecture
-alwaysApply: false
----
-
-When designing or reasoning about AI-agent architecture (which patterns to use,
-trade-offs, how patterns combine), read `SKILL.md` for the index, then the
-relevant `patterns/*.md` files for depth. Concepts only — implement in this
-project's actual stack (LangChain, CrewAI, raw SDK, ADK, etc.).
