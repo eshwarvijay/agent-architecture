@@ -85,13 +85,14 @@ when it matters.
 
 ## The 21 patterns at a glance
 
-**Foundations** — Prompt Chaining · Routing · Parallelization · Reflection · Tool Use · Planning · Multi-Agent
-**State & knowledge** — Memory Management · Learning & Adaptation · Model Context Protocol (MCP) · Goal Setting & Monitoring
-**Robustness** — Exception Handling & Recovery · Human-in-the-Loop · Knowledge Retrieval (RAG)
-**Advanced & scaling** — Inter-Agent Comms (A2A) · Resource-Aware Optimization · Reasoning Techniques · Guardrails/Safety · Evaluation & Monitoring · Prioritization · Exploration & Discovery
+| | Group | Patterns |
+|---|---|---|
+| 🧩 | **Foundations** | Prompt Chaining · Routing · Parallelization · Reflection · Tool Use · Planning · Multi-Agent |
+| 🧠 | **State & Knowledge** | Memory Management · Learning & Adaptation · Model Context Protocol (MCP) · Goal Setting & Monitoring |
+| 🛡️ | **Robustness** | Exception Handling & Recovery · Human-in-the-Loop · Knowledge Retrieval (RAG) |
+| 🚀 | **Advanced & Scaling** | Inter-Agent Comms (A2A) · Resource-Aware Optimization · Reasoning Techniques · Guardrails / Safety · Evaluation & Monitoring · Prioritization · Exploration & Discovery |
 
-Plus appendices (prompting techniques, frameworks overview), a worked composition
-example, and a glossary.
+<sub>Plus appendices (prompting techniques · frameworks overview · GUI/CLI/coding agents · AgentSpace), a worked composition example, and a glossary.</sub>
 
 ---
 
