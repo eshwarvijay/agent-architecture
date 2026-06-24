@@ -1,4 +1,8 @@
-# agent-architecture
+<p align="center">
+  <img src="assets/clawd-welcome.jpeg" alt="Welcome, Claw'd" width="240">
+</p>
+
+<h1 align="center">agent-architecture</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Claude_Code-skill-D97757?style=for-the-badge&logo=anthropic&logoColor=white" alt="Claude Code skill">
@@ -33,6 +37,8 @@ deliberately excluded — the patterns are durable; framework choices aren't.
 
 ## What changes — with vs. without the skill
 
+<img src="assets/clawd-thinking.jpeg" alt="Clawd thinking" width="120" align="right">
+
 > **You:** *"Design a text-to-SQL agent that runs queries against our production database."*
 
 **Without the skill — Claude improvises:**
@@ -60,6 +66,8 @@ code-executes boundary) that come straight from the patterns, not from improvisa
 
 ## What becomes possible
 
+<img src="assets/clawd-rocket.jpeg" alt="Clawd launching a rocket" width="150" align="right">
+
 Loaded, the skill lets you:
 
 - **Pick the right patterns fast** — describe a problem, get the minimal set of patterns that solves it (most agents need 3–6), with the trade-offs spelled out.
@@ -74,6 +82,8 @@ write code.
 ---
 
 ## How to use it
+
+<img src="assets/clawd-working.jpeg" alt="Clawd working at a laptop" width="130" align="right">
 
 Just talk to Claude about agent design. The skill activates on questions like:
 
