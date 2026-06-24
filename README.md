@@ -1,5 +1,12 @@
 # agent-architecture
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Claude_Code-skill-D97757?style=for-the-badge&logo=anthropic&logoColor=white" alt="Claude Code skill">
+  <img src="https://img.shields.io/badge/patterns-21-5436DA?style=for-the-badge" alt="21 patterns">
+  <img src="https://img.shields.io/badge/code-0%25-success?style=for-the-badge" alt="0% code — concepts only">
+  <img src="https://img.shields.io/badge/install-%2Fplugin-black?style=for-the-badge&logo=anthropic&logoColor=white" alt="install via /plugin">
+</p>
+
 **A Claude Code skill that turns Claude into an agent-design expert.**
 
 Ask Claude to design an AI agent and, by default, it improvises from memory —
@@ -123,3 +130,14 @@ then design X."* — or just browse the patterns here on GitHub.
 *Distilled from Antonio Gulli, “Agentic Design Patterns” (2025) — concepts only, a
 derived reference; see the book for full text and code. Snapshot: mid-2025, so the
 patterns hold but specific model/API details may have moved on.*
+
+<details>
+<summary>🍳 <i>psst… you found the kitchen</i></summary>
+
+<p align="center">
+  <img src="assets/clawd-cooking.jpeg" alt="Clawd the chef cooking up an agent" width="200">
+  <br>
+  <sub><b>Patterns are the recipe.</b> Use the fewest that work — 3–6, not all 21. Over-season and your clean paneer butter masala turns into a 30-spice mess no one can debug.</sub>
+</p>
+
+</details>
