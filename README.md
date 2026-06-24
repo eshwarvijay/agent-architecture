@@ -1,142 +1,115 @@
 # agent-architecture
 
-**A design-phase reference for building AI agents.** The 21 agentic design
-patterns from Antonio Gulli's *Agentic Design Patterns: A Hands-On Guide to
-Building Intelligent Systems*, distilled to **concepts only — no code.**
+**A Claude Code skill that turns Claude into an agent-design expert.**
 
-A capable LLM is not an agent. Turning one into a reliable, goal-directed system
-takes structure: how it breaks down a task, calls tools, remembers, recovers from
-errors, and knows when to ask a human. These patterns are that structure — the
-Gang-of-Four design patterns for the agent era. This repo tells you **which
-patterns a problem needs and why**; you implement the **how** in your own stack
-(LangChain / LangGraph, CrewAI, the Anthropic / OpenAI / Gemini SDK, or Google ADK).
+Ask Claude to design an AI agent and, by default, it improvises from memory —
+plausible, but generic, and blind to the failure modes that bite in production.
+This skill gives Claude a structured, battle-tested body of knowledge — the **21
+agentic design patterns** from Antonio Gulli's *Agentic Design Patterns* — so that
+instead of guessing, it reasons from a real catalog: which patterns your problem
+needs, how they trade off, and how they compose into a reliable system.
 
-> Packaged as a **Claude Code skill** — install it (below) and Claude loads the
-> right pattern on demand while you design. But every file is plain markdown, so
-> it's just as useful read straight on GitHub or pasted into any chat.
+It changes *how Claude thinks* about agent design, not just what it knows.
+
+---
+
+## Why this is useful
+
+A powerful LLM is **not** an agent. Making one reliable takes architecture — how it
+breaks down a task, calls tools, remembers, recovers from errors, and knows when to
+escalate to a human. That architecture is a solved problem: there are ~21 recurring
+patterns (the Gang-of-Four equivalents for the agent era). This skill puts all of
+them at Claude's fingertips, as **concepts you can apply in any framework**
+(LangChain, CrewAI, the raw Anthropic/OpenAI/Gemini SDK, or Google ADK). Code is
+deliberately excluded — the patterns are durable; framework choices aren't.
+
+---
+
+## What changes — with vs. without the skill
+
+> **You:** *"Design a text-to-SQL agent that runs queries against our production database."*
+
+**Without the skill — Claude improvises:**
+> "I'd use an LLM to generate SQL from the question, run it, and return the
+> results. You could add error handling and maybe let it retry."
+
+Reasonable, but vague. It misses the schema-grounding problem, has no quality loop,
+and — dangerously — no safety gate before a generated query hits production.
+
+**With the skill — Claude reasons from the catalog:**
+> "This needs five patterns working together:
+> - **RAG** to ground generation in your real schema (don't trust the model's guess at table names)
+> - **Tool Use** as the executor — but *your code* runs the SQL, never the model; and the tool should **raise** on DB errors, not return them as strings, so failures aren't silently swallowed
+> - **Reflection** with a *separate critic* (a 'meticulous SQL reviewer' persona) — self-review is biased; review the SQL against the schema *before* executing, capped at 3 iterations for cost
+> - **Human-in-the-Loop** as a write-gate — read-only `SELECT`s run autonomously; anything mutating escalates for approval (escalation is just another tool)
+> - **Exception Handling** to retry transient failures and feed permanent ones back into the reflection loop
+>
+> Here's the runtime flow…"
+
+Same question. The second answer is **specific, ordered, and safe** — it names the
+non-obvious pitfalls (raise-don't-return, biased self-review, the model-proposes /
+code-executes boundary) that come straight from the patterns, not from improvisation.
+
+---
+
+## What becomes possible
+
+Loaded, the skill lets you:
+
+- **Pick the right patterns fast** — describe a problem, get the minimal set of patterns that solves it (most agents need 3–6), with the trade-offs spelled out.
+- **Go deep on any one** — get a pattern's full mechanics, real-world use cases, and the production pitfalls, without code noise.
+- **Design compositions** — see how patterns stack into one system (a research assistant = Planning + Tool Use + Multi-Agent + Reflection + Memory).
+- **Pressure-test a design** — ask "what am I missing?" and Claude checks your architecture against the full catalog (no guardrails? no eval? no recovery?).
+- **Stay framework-agnostic** — decide *what* to build here; implement the *how* in whatever stack you use.
+
+It's a **design-phase** tool: it makes the architecture decisions sharp *before* you
+write code.
 
 ---
 
 ## How to use it
 
-**The workflow is design → implement:**
+Just talk to Claude about agent design. The skill activates on questions like:
 
-1. **Pick patterns** — match your problem against the catalog below (or the *Decision guide*). Most real agents need 3–6.
-2. **Go deep** — read the matching `patterns/<name>.md` for mechanics, trade-offs, and the pitfalls that bite in production.
-3. **Compose** — see *How patterns combine* for how they layer into one system.
-4. **Implement** — build it in your framework. This repo deliberately stops at the design boundary.
+- *"Which patterns should this agent use?"*
+- *"Design an agent that does X."*
+- *"What's the difference between Routing and Planning?"*
+- *"Review this agent design for what's missing."*
+- …or naming any pattern (RAG, Reflection, MCP, A2A, guardrails…).
 
-**As a Claude Code skill**, that loop is automatic — ask *"which pattern for X?"*,
-*"design an agent that…"*, or name a pattern, and Claude reads the relevant files
-for you.
-
----
-
-## The 21 patterns
-
-### Part 1 — Foundations: the core execution loop
-| Pattern | What it is | Reach for it when |
-|---|---|---|
-| **Prompt Chaining** | Split a task into a sequence of LLM steps, each feeding the next | One prompt overloads the model — instructions get dropped, context drifts |
-| **Routing** | Classify the input, dispatch to the right handler/tool/sub-agent | Several distinct paths exist and the right one depends on the request |
-| **Parallelization** | Run independent sub-tasks concurrently, then synthesize | Sub-tasks don't depend on each other and latency matters |
-| **Reflection** | Agent critiques and revises its own output (often via a separate critic) | First drafts are unreliable and quality beats speed |
-| **Tool Use** | LLM calls external functions / APIs / DBs (function calling) | The agent needs live data, calculations, or real-world actions |
-| **Planning** | Agent forms a multi-step plan before acting | The *how* must be discovered at runtime, not hard-coded |
-| **Multi-Agent** | Specialized agents coordinate (supervisor / hierarchical / network) | A monolithic agent is too complex; roles benefit from separation |
-
-### Part 2 — State, knowledge & goals
-| Pattern | What it is | Reach for it when |
-|---|---|---|
-| **Memory Management** | Short-term context + long-term persistent memory | The agent must remember within or across sessions |
-| **Learning & Adaptation** | Behavior improves over time (in-context, fine-tuning, RL, self-mod) | The agent should adapt from feedback, not stay static |
-| **Model Context Protocol (MCP)** | Open protocol standardizing tool/resource/prompt access | Tools & data must be discoverable and reusable across agents |
-| **Goal Setting & Monitoring** | Define goals + success criteria, then track progress | The agent needs explicit objectives and a way to know it's on track |
-
-### Part 3 — Robustness & interaction
-| Pattern | What it is | Reach for it when |
-|---|---|---|
-| **Exception Handling & Recovery** | Detect, handle, recover (retry / fallback / circuit-breaker) | Tools and environments fail and the agent must degrade gracefully |
-| **Human-in-the-Loop** | Insert human approval / escalation / correction at key points | Stakes are high, confidence is low, or oversight is required |
-| **Knowledge Retrieval (RAG)** | Retrieve external knowledge to ground generation | The agent needs facts beyond training data, or must cite sources |
-
-### Part 4 — Advanced & scaling
-| Pattern | What it is | Reach for it when |
-|---|---|---|
-| **Inter-Agent Communication (A2A)** | Open protocol for agents to discover & task each other | Independent agents (even across orgs) must interoperate |
-| **Resource-Aware Optimization** | Route by cost/latency; budget tokens; model fallback | Cost or latency budgets matter; cheap vs. expensive models per task |
-| **Reasoning Techniques** | CoT, Tree-of-Thought, Self-Correction, ReAct, debate, inference-time scaling | The task needs deliberate multi-step reasoning, not one shot |
-| **Guardrails / Safety** | Layered input/output/behavioral/tool constraints + moderation | Untrusted input, harmful-output risk, prompt injection, policy needs |
-| **Evaluation & Monitoring** | Assess responses & trajectories (LLM-as-judge, tool metrics) | You need to measure quality and watch agents in production |
-| **Prioritization** | Rank tasks/goals/actions by urgency, importance, cost, dependencies | The agent juggles competing tasks and must choose what's next |
-| **Exploration & Discovery** | Explore unknown spaces, generate & test hypotheses | The goal is open-ended discovery, not optimizing a known objective |
+Claude loads a one-screen index of all 21 patterns, then pulls the full detail for
+whichever ones your problem needs — so the right knowledge is in context exactly
+when it matters.
 
 ---
 
-## Decision guide
+## The 21 patterns at a glance
 
-- **Task too big for one prompt?** → Prompt Chaining (sequential) · Parallelization (independent) · Planning (unknown steps)
-- **Need to pick among handlers?** → Routing
-- **Output quality unreliable?** → Reflection (+ Goal Setting for criteria, Evaluation to measure)
-- **Needs external data/actions?** → Tool Use → standardize with MCP → ground with RAG
-- **One agent too complex?** → Multi-Agent; if agents span orgs → A2A
-- **Must remember things?** → Memory Management
-- **High stakes / untrusted input?** → Guardrails + Human-in-the-Loop + Exception Handling
-- **Cost or latency pressure?** → Resource-Aware Optimization (+ Prioritization)
-- **Hard reasoning?** → Reasoning Techniques (CoT / ToT / ReAct …)
-- **Open-ended discovery?** → Exploration & Discovery
+**Foundations** — Prompt Chaining · Routing · Parallelization · Reflection · Tool Use · Planning · Multi-Agent
+**State & knowledge** — Memory Management · Learning & Adaptation · Model Context Protocol (MCP) · Goal Setting & Monitoring
+**Robustness** — Exception Handling & Recovery · Human-in-the-Loop · Knowledge Retrieval (RAG)
+**Advanced & scaling** — Inter-Agent Comms (A2A) · Resource-Aware Optimization · Reasoning Techniques · Guardrails/Safety · Evaluation & Monitoring · Prioritization · Exploration & Discovery
+
+Plus appendices (prompting techniques, frameworks overview), a worked composition
+example, and a glossary.
 
 ---
 
-## How patterns combine
-
-Real agents stack several. Take an **autonomous research assistant** answering
-*"Analyze the impact of quantum computing on cybersecurity"* — five patterns woven
-into one system:
-
-1. **Planning** decomposes the query into a research plan (concepts → algorithms → threats → synthesis).
-2. **Tool Use** executes each step — search tools, academic-DB queries.
-3. **Multi-Agent** splits the work: a *Researcher* gathers sources, a *Writer* drafts from the plan.
-4. **Reflection** adds a *Critic* that reviews the draft; feedback loops back to the Writer to self-correct.
-5. **Memory Management** holds the plan, sources, drafts, and critiques so context survives the whole run.
-
-No single pattern does this; the composition does. `conclusion.md` has the full
-walkthrough.
-
----
-
-## What's inside
-
-```
-SKILL.md          # the index Claude loads — every pattern's purpose + when-to-use
-patterns/         # 21 deep files: overview, mechanics, use cases, trade-offs, pitfalls, refs
-appendices/       # prompting techniques · frameworks overview · GUI/CLI/coding agents · AgentSpace
-conclusion.md     # how patterns combine (full worked example)
-glossary.md       # core agentic-AI terms
-```
-
-Each `patterns/*.md` carries the chapter's full conceptual depth — including the
-non-obvious pitfalls (e.g. *tools should raise errors, not return them as strings*;
-*a separate critic beats self-review*; *the model proposes the call, your code
-executes it*). Code is excluded on purpose: the patterns are durable, framework
-choices aren't.
-
----
-
-## Install (Claude Code)
+## Install
 
 ```sh
 git clone https://github.com/eshwarvijay/agent-architecture ~/agent-architecture
 ln -s ~/agent-architecture ~/.claude/skills/agent-architecture
 ```
 
-Then ask anything agent-design-shaped and the skill loads the right pattern on demand.
+That's it — next time you ask Claude an agent-design question, the skill kicks in.
 
-**No install?** Point any assistant at the files: *"Read `SKILL.md` and
-`patterns/04-reflection.md`, then propose a design for X."*
+**No Claude Code?** Every file is plain markdown. Point any assistant at it:
+*"Read SKILL.md and the relevant patterns/ files, then design X."* — or just browse
+the patterns here on GitHub.
 
 ---
 
-*Distilled from Antonio Gulli, “Agentic Design Patterns” (2025). Concepts only — a
+*Distilled from Antonio Gulli, “Agentic Design Patterns” (2025) — concepts only, a
 derived reference; see the book for full text and code. Snapshot: mid-2025, so the
 patterns hold but specific model/API details may have moved on.*
