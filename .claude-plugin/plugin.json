@@ -1,0 +1,11 @@
+{
+  "name": "agent-architecture",
+  "version": "1.0.0",
+  "description": "Turns Claude into an agent-design expert: the 21 agentic design patterns (concepts, no code) for choosing, comparing, and composing the right patterns when building AI agents.",
+  "author": {
+    "name": "Eshwar Vijay",
+    "url": "https://github.com/eshwarvijay"
+  },
+  "homepage": "https://github.com/eshwarvijay/agent-architecture",
+  "keywords": ["ai-agents", "agentic-ai", "design-patterns", "llm", "rag", "mcp"]
+}

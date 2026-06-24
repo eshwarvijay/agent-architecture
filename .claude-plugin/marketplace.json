@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "agent-architecture",
+  "description": "Agent-design knowledge base for Claude Code: the 21 agentic design patterns, distilled to concepts.",
+  "owner": {
+    "name": "Eshwar Vijay",
+    "url": "https://github.com/eshwarvijay"
+  },
+  "plugins": [
+    {
+      "name": "agent-architecture",
+      "description": "Turns Claude into an agent-design expert: pick, compare, and compose the 21 agentic design patterns when designing AI agents. Concepts only, framework-agnostic.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}

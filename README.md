@@ -98,16 +98,25 @@ when it matters.
 
 ## Install
 
-```sh
-git clone https://github.com/eshwarvijay/agent-architecture ~/agent-architecture
-ln -s ~/agent-architecture ~/.claude/skills/agent-architecture
+**As a plugin (recommended)** — one-command install from within Claude Code:
+
+```
+/plugin marketplace add eshwarvijay/agent-architecture
+/plugin install agent-architecture
 ```
 
-That's it — next time you ask Claude an agent-design question, the skill kicks in.
+**Or manually** — clone and symlink the skill:
 
-**No Claude Code?** Every file is plain markdown. Point any assistant at it:
-*"Read SKILL.md and the relevant patterns/ files, then design X."* — or just browse
-the patterns here on GitHub.
+```sh
+git clone https://github.com/eshwarvijay/agent-architecture ~/agent-architecture
+ln -s ~/agent-architecture/skills/agent-architecture ~/.claude/skills/agent-architecture
+```
+
+Either way — next time you ask Claude an agent-design question, the skill kicks in.
+
+**No Claude Code?** Every file is plain markdown. Point any assistant at
+`skills/agent-architecture/`: *"Read SKILL.md and the relevant patterns/ files,
+then design X."* — or just browse the patterns here on GitHub.
 
 ---
 
