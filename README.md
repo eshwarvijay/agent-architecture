@@ -4,7 +4,7 @@
   <img src="https://img.shields.io/badge/Claude_Code-skill-D97757?style=for-the-badge&logo=anthropic&logoColor=white" alt="Claude Code skill">
   <img src="https://img.shields.io/badge/patterns-21-5436DA?style=for-the-badge" alt="21 patterns">
   <img src="https://img.shields.io/badge/code-0%25-success?style=for-the-badge" alt="0% code — concepts only">
-  <img src="https://komarev.com/ghpvc/?username=eshwarvijay-agent-architecture&style=for-the-badge&color=D97757&label=VISITORS" alt="repo visitors">
+  <img src="https://visitor-badge.laobi.icu/badge?page_id=eshwarvijay.agent-architecture&title=VISITORS&color=D97757" alt="repo visitors">
 </p>
 
 **A Claude Code skill that turns Claude into an agent-design expert.**
