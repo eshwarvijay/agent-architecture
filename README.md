@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="assets/clawd-welcome.jpeg" alt="Welcome, Claw'd" width="300">
-</p>
-
 <h1 align="center">agent-architecture</h1>
 
 <p align="center">
