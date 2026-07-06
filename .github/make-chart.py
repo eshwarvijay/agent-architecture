@@ -15,8 +15,9 @@ PURPLE = "#5436DA"
 
 def build_svg(history: dict) -> str:
     days = sorted(history)
-    # cumulative total over time — the "downloads going up" line
-    cum, running = [], 0
+    # cumulative total over time — the "downloads going up" line.
+    # lead with a 0 so the line visibly rises from the baseline.
+    cum, running = [0], 0
     for d in days:
         running += history[d]
         cum.append(running)
@@ -52,7 +53,7 @@ def build_svg(history: dict) -> str:
     <stop offset="0" stop-color="{PURPLE}" stop-opacity="0.35"/>
     <stop offset="1" stop-color="{PURPLE}" stop-opacity="0"/>
   </linearGradient></defs>
-  <text x="{PAD_L}" y="18" font-size="13" font-weight="600" fill="{PURPLE}">clones over time — {total} total</text>
+  <text x="{PAD_L}" y="18" font-size="13" font-weight="600" fill="{PURPLE}">plugin downloads over time — {total} total</text>
   {grid}
   <polygon points="{area}" fill="url(#g)"/>
   <polyline points="{line}" fill="none" stroke="{PURPLE}" stroke-width="2.5" stroke-linejoin="round"/>
@@ -65,7 +66,7 @@ def build_svg(history: dict) -> str:
 def selftest():
     svg = build_svg({"2026-06-24": 95, "2026-06-25": 3, "2026-06-26": 7})
     assert "<polyline" in svg and "105 total" in svg, svg
-    assert svg.count("<circle") == 3
+    assert svg.count("<circle") == 4  # 3 days + leading zero baseline
     print("ok")
 
 
