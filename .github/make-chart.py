@@ -68,8 +68,9 @@ def build_svg(history: dict) -> str:
   </defs>
   <rect x="0" y="0" width="{W}" height="{H}" rx="14" fill="#faf9ff"/>
   <text x="{PAD_L}" y="24" font-size="14" font-weight="700" fill="{INK}">plugin downloads</text>
-  <text x="{W-PAD_R}" y="24" text-anchor="end" font-size="12" fill="{MUTE}">{days[0]} → {days[-1]}</text>
   {grid}
+  <text x="{PAD_L}" y="{H-14}" font-size="11" fill="{MUTE}">{days[0]}</text>
+  <text x="{W-PAD_R}" y="{H-14}" text-anchor="end" font-size="11" fill="{MUTE}">{days[-1]}</text>
   <path d="{area}" fill="url(#area)"/>
   <path d="{path}" fill="none" stroke="url(#stroke)" stroke-width="3" stroke-linecap="round"/>
   <circle cx="{lx:.1f}" cy="{ly:.1f}" r="6" fill="{PURPLE}" fill-opacity="0.18"/>
