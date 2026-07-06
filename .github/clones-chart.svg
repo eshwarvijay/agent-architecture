@@ -1,13 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="240" viewBox="0 0 720 240" font-family="-apple-system,Segoe UI,sans-serif">
-  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#5436DA" stop-opacity="0.35"/>
-    <stop offset="1" stop-color="#5436DA" stop-opacity="0"/>
-  </linearGradient></defs>
-  <text x="48" y="18" font-size="13" font-weight="600" fill="#5436DA">plugin downloads over time — 112 total</text>
-  <line x1="48" y1="208.0" x2="704" y2="208.0" stroke="#888" stroke-opacity="0.15"/><text x="40" y="212.0" text-anchor="end" font-size="11" fill="#888">0</text><line x1="48" y1="118.0" x2="704" y2="118.0" stroke="#888" stroke-opacity="0.15"/><text x="40" y="122.0" text-anchor="end" font-size="11" fill="#888">56</text><line x1="48" y1="28.0" x2="704" y2="28.0" stroke="#888" stroke-opacity="0.15"/><text x="40" y="32.0" text-anchor="end" font-size="11" fill="#888">112</text>
-  <polygon points="48,208 48.0,208.0 113.6,55.3 179.2,50.5 244.8,45.7 310.4,42.5 376.0,39.2 441.6,37.6 507.2,36.0 572.8,31.2 638.4,29.6 704.0,28.0 704.0,208" fill="url(#g)"/>
-  <polyline points="48.0,208.0 113.6,55.3 179.2,50.5 244.8,45.7 310.4,42.5 376.0,39.2 441.6,37.6 507.2,36.0 572.8,31.2 638.4,29.6 704.0,28.0" fill="none" stroke="#5436DA" stroke-width="2.5" stroke-linejoin="round"/>
-  <circle cx="48.0" cy="208.0" r="2.5" fill="#5436DA"/><circle cx="113.6" cy="55.3" r="2.5" fill="#5436DA"/><circle cx="179.2" cy="50.5" r="2.5" fill="#5436DA"/><circle cx="244.8" cy="45.7" r="2.5" fill="#5436DA"/><circle cx="310.4" cy="42.5" r="2.5" fill="#5436DA"/><circle cx="376.0" cy="39.2" r="2.5" fill="#5436DA"/><circle cx="441.6" cy="37.6" r="2.5" fill="#5436DA"/><circle cx="507.2" cy="36.0" r="2.5" fill="#5436DA"/><circle cx="572.8" cy="31.2" r="2.5" fill="#5436DA"/><circle cx="638.4" cy="29.6" r="2.5" fill="#5436DA"/><circle cx="704.0" cy="28.0" r="2.5" fill="#5436DA"/>
-  <text x="48" y="230" font-size="11" fill="#888">2026-06-24</text>
-  <text x="704" y="230" text-anchor="end" font-size="11" fill="#888">2026-07-05</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="260" viewBox="0 0 760 260" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">
+  <defs>
+    <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5436DA" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#5436DA" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="stroke" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7a5cff"/>
+      <stop offset="1" stop-color="#5436DA"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="760" height="260" rx="14" fill="#faf9ff"/>
+  <text x="52" y="24" font-size="14" font-weight="700" fill="#1b1240">plugin downloads</text>
+  <text x="704" y="24" text-anchor="end" font-size="12" fill="#8a8aa0">2026-06-24 → 2026-07-05</text>
+  <line x1="52" y1="132.0" x2="704" y2="132.0" stroke="#8a8aa0" stroke-opacity="0.18" stroke-dasharray="3 4"/><text x="42" y="136.0" text-anchor="end" font-size="11" fill="#8a8aa0">56</text><line x1="52" y1="44.0" x2="704" y2="44.0" stroke="#8a8aa0" stroke-opacity="0.18" stroke-dasharray="3 4"/><text x="42" y="48.0" text-anchor="end" font-size="11" fill="#8a8aa0">112</text>
+  <path d="M 52.0,220.0 C 62.9,195.1 95.5,96.4 117.2,70.7 C 138.9,45.0 160.7,67.6 182.4,66.0 C 204.1,64.4 225.9,62.6 247.6,61.3 C 269.3,60.0 291.1,59.2 312.8,58.1 C 334.5,57.1 356.3,55.8 378.0,55.0 C 399.7,54.2 421.5,54.0 443.2,53.4 C 464.9,52.9 486.7,52.9 508.4,51.9 C 530.1,50.8 551.9,48.2 573.6,47.1 C 595.3,46.1 617.1,46.1 638.8,45.6 C 660.5,45.0 693.1,44.3 704.0,44.0 L 704.0,220 L 52.0,220 Z" fill="url(#area)"/>
+  <path d="M 52.0,220.0 C 62.9,195.1 95.5,96.4 117.2,70.7 C 138.9,45.0 160.7,67.6 182.4,66.0 C 204.1,64.4 225.9,62.6 247.6,61.3 C 269.3,60.0 291.1,59.2 312.8,58.1 C 334.5,57.1 356.3,55.8 378.0,55.0 C 399.7,54.2 421.5,54.0 443.2,53.4 C 464.9,52.9 486.7,52.9 508.4,51.9 C 530.1,50.8 551.9,48.2 573.6,47.1 C 595.3,46.1 617.1,46.1 638.8,45.6 C 660.5,45.0 693.1,44.3 704.0,44.0" fill="none" stroke="url(#stroke)" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="704.0" cy="44.0" r="6" fill="#5436DA" fill-opacity="0.18"/>
+  <circle cx="704.0" cy="44.0" r="3.5" fill="#5436DA"/>
+  <text x="696.0" y="34.0" text-anchor="end" font-size="15" font-weight="800" fill="#5436DA">112</text>
 </svg>
