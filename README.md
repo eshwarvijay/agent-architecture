@@ -5,7 +5,6 @@
   <img src="https://img.shields.io/badge/patterns-21-5436DA?style=for-the-badge" alt="21 patterns">
   <img src="https://img.shields.io/badge/install-%2Fplugin-000000?style=for-the-badge&logo=anthropic&logoColor=white" alt="install via /plugin">
   <img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/eshwarvijay/agent-architecture/master/.github/badge-clones.json&style=for-the-badge" alt="clones">
-  <img src="https://img.shields.io/github/stars/eshwarvijay/agent-architecture?style=for-the-badge&color=D97757" alt="GitHub stars">
 </p>
 
 **A Claude Code skill that turns Claude into an agent-design expert.**
