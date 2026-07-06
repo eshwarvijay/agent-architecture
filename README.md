@@ -7,6 +7,10 @@
   <img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/eshwarvijay/agent-architecture/master/.github/badge-clones.json&style=for-the-badge" alt="clones">
 </p>
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/eshwarvijay/agent-architecture/master/.github/clones-chart.svg" alt="clones over time" width="600">
+</p>
+
 **A Claude Code skill that turns Claude into an agent-design expert.**
 
 Ask Claude to design an AI agent and, by default, it improvises from memory —
