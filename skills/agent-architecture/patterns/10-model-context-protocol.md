@@ -105,10 +105,37 @@ An analogy: tool function calling is like giving an AI a specific set of custom-
 - **Weak error handling.** Failures (tool errors, unavailable servers, invalid requests) must be communicated back to the LLM so it can understand and recover or try alternatives.
 - **Implementation complexity.** The open standard can be complex to implement directly; SDKs (Anthropic's, FastMCP) mitigate this boilerplate.
 
+## Server Architecture Patterns
+
+> Addendum — not in the Gulli book. Named server "shapes" from Rodrigues & Vas,
+> *MCP Server Architecture Patterns for LLM-Integrated Applications*
+> (arXiv:2606.30317). The chapter above covers the protocol; these name how to
+> structure a single server. Most servers are one primary pattern + a dash of
+> another — don't build all five.
+
+| Pattern | Use when the server mainly… |
+|---|---|
+| Pattern | Use when the server mainly… | Key liability |
+|---|---|---|
+| **Resource Gateway** | reads/exposes backend data — reads as Resources, unsafe/parameterized queries as Tools | +1 network hop; **sanitize backend content against prompt injection at this one layer** |
+| **Tool Orchestrator** | performs a multi-system workflow — expose it as *one composite tool*, server does the sub-calls | the LLM never sees the sub-APIs; server owns partial-failure handling |
+| **Stateful Session Server** | must keep state across calls — issue a session ID, keep per-session context (Redis to scale) | memory leaks if sessions aren't reaped; LLM must reliably echo the session ID |
+| **Proxy Aggregator** | fronts N upstream MCP servers as one endpoint | namespace tool names per-server to avoid collisions; central auth/logging point |
+| **Domain-Specific Adapter** | is a thin 1:1 translation shim for one system | — |
+
+**Anti-patterns** (the paper's four; overlap the Pitfalls above):
+
+1. **The God Tool** — one `do_anything(action, params)` tool. Tool-selection accuracy *collapses*. Give each operation its own named tool with a precise schema.
+2. **Unsanitized Resource Content** — returning user content raw; a document reading "Ignore previous instructions…" is executed as instruction, not data. Sanitize externally-sourced content before it enters the response.
+3. **Synchronous Long-Running Operations** — MCP has no async callback, so long ops time the client out. Return a job ID synchronously + expose a separate `poll_job(id)` tool.
+4. **Vague/Missing Tool Descriptions** — LLMs pick tools by reading *descriptions*, not schemas. Say what the tool does, when to use it, and what it returns.
+
+**The one empirical number worth citing:** the paper measured tool-selection accuracy vs tool count on **Claude Haiku 4.5 & Sonnet 4** (N=200/bucket) — accuracy stays above the 90% threshold up to **≈10 tools per server**, then degrades. Keep each server at or below ~10 well-named tools; split beyond that (→ Proxy Aggregator).
+
 ## Relationships to Other Patterns
 
 - **Tool Function Calling** — MCP is the standardized, discoverable, client-server superset of direct function calling. Function calling gives direct access to a few specific functions; MCP is the communication framework that lets LLMs discover and use a vast, evolving range of external resources.
-- **Multi-agent / A2A-style orchestration** — MCP's federated model lets independently operating services be composed into new applications and workflows whose collaboration is orchestrated by LLMs, complementing higher-level agent coordination.
+- **Multi-agent / A2A-style orchestration** — MCP's federated model lets independently operating services be composed into new applications and workflows whose collaboration is orchestrated by LLMs, complementing higher-level agent coordination. MCP can also serve as the *mediation substrate* between agents (Mediator/Broker over shared resources) — see [Multi-Agent](07-multi-agent.md).
 - **Agent Development Kit (ADK)** — ADK can act as an MCP client to consume existing MCP servers (local via STDIO, remote via HTTP) and can also expose ADK tools through an MCP server. FastMCP is a complementary framework for authoring MCP servers in Python.
 
 ## Key Takeaways
@@ -129,3 +156,4 @@ An analogy: tool function calling is like giving an AI a specific set of custom-
 2. FastMCP Documentation. https://github.com/jlowin/fastmcp
 3. MCP Tools for Genmedia Services. https://google.github.io/adk-docs/mcp/#mcp-servers-for-google-cloud-genmedia
 4. MCP Toolbox for Databases Documentation. https://google.github.io/adk-docs/mcp/databases/
+5. Rodrigues & Vas, MCP Server Architecture Patterns for LLM-Integrated Applications — https://arxiv.org/abs/2606.30317 (source for the Server Architecture Patterns section: 5 patterns, 4 anti-patterns, tool-count finding)

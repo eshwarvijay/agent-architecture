@@ -52,6 +52,41 @@ There is a spectrum of interrelationship and communication models, ranging from 
 
 The choice of model is a critical design decision. The optimal choice depends on factors such as the complexity of the task, the number of agents, the desired level of autonomy, the need for robustness, and the acceptable communication overhead.
 
+### Classical communication patterns (the plumbing under the topologies)
+
+> Addendum — not in the Gulli book. From Sarkar & Sarkar, *Survey of LLM Agent
+> Communication with MCP* (arXiv:2506.05364). The topologies above say *who
+> talks to whom*; these four classical (Gang-of-Four-lineage) patterns say *how
+> the messages are wired*. They map onto the topologies rather than replacing them.
+
+| Pattern | Wiring | Fits topology |
+|---|---|---|
+| **Mediator** | all agents talk through one coordinator; no direct peer links | Supervisor / Hierarchical |
+| **Broker** | a router decides *which* agent/server handles each request (discovery + routing) | Supervisor, or a hub in Custom |
+| **Observer** | agents subscribe to another agent's state and react to its changes | Network, event-driven |
+| **Publish-Subscribe** | agents emit/consume events on topics, fully decoupled from each other | Network, Custom |
+
+The paper's thesis: **MCP can serve as the mediation substrate** — its
+resources (shared state/memory) and sampling (shared prompts/models) let a
+Mediator or Broker route between agents over one standard, rather than N bespoke
+integrations (see [MCP](10-model-context-protocol.md)).
+
+### Why centralized wins as agent count grows (the O(N²) → O(N) rule)
+
+The same source formalizes the communication-overhead pitfall as a graph-theory
+count of links for N agents:
+
+- **Decentralized (Network / peer-to-peer):** every agent may talk to every
+  other → `L ≈ N(N−1)/2 = O(N²)` links. Coordination cost and bottleneck risk
+  rise quadratically.
+- **Centralized (Mediator / Broker / Supervisor):** all traffic routes through
+  one hub → `L ≈ N = O(N)` links.
+
+Practical rule: a flat Network topology is fine for a handful of agents; past
+that, route through a Mediator/Broker hub to keep link growth linear. This is
+the quantitative form of the "communication overhead" pitfall below — and the
+reason to trade some resilience for a coordinator once N is more than a few.
+
 ### Framework orchestration paradigms (illustrated in CrewAI and Google ADK)
 
 The chapter walks through code examples without requiring the reader to write code. Conceptually they demonstrate:
@@ -106,7 +141,8 @@ The capacity to delineate specialized agents and meticulously orchestrate their 
 - **Planning:** Sequential handoffs are similar to the Planning pattern, but explicitly involve different agents executing the steps.
 - **Reflection / Critic-Reviewer:** The critic-reviewer collaboration form embodies a reflection-style review loop distributed across separate creating and assessing agents.
 - **Tool Use:** The "Agent as a Tool" arrangement bridges the two patterns — one agent uses another agent through a tool wrapper, expressing orchestration as tool invocation. The best practice of separating concrete actions (tools) from reasoning (agents) recurs throughout.
-- **Routing / Orchestration:** Supervisor and hierarchical topologies depend on a coordinator delegating to and synthesizing the work of specialized sub-agents.
+- **Routing / Orchestration:** Supervisor and hierarchical topologies depend on a coordinator delegating to and synthesizing the work of specialized sub-agents. The Broker/Mediator patterns above are the message-wiring form of this.
+- **MCP:** MCP can be the mediation substrate for these topologies — routing agent-to-agent traffic through resources/sampling over one standard. See [MCP](10-model-context-protocol.md).
 - **Forward link:** Understanding agent collaboration naturally leads to inquiry into how agents interact with the external environment (the subject of the following chapter).
 
 ## Key Takeaways
@@ -121,3 +157,4 @@ The capacity to delineate specialized agents and meticulously orchestrate their 
 
 1. Multi-Agent Collaboration Mechanisms: A Survey of LLMs — https://arxiv.org/abs/2501.06322
 2. Multi-Agent System — The Power of Collaboration — https://aravindakumar.medium.com/introducing-multi-agent-frameworks-the-power-of-collaboration-e9db31bba1b6
+3. Sarkar & Sarkar, Survey of LLM Agent Communication with MCP — https://arxiv.org/abs/2506.05364 (source for the communication patterns and O(N²)→O(N) rule above)
