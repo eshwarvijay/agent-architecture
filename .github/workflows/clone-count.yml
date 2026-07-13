@@ -19,7 +19,7 @@ jobs:
 
       - name: Merge clone traffic into history
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.TRAFFIC_TOKEN }}
         run: |
           gh api "repos/${{ github.repository }}/traffic/clones" \
             --jq '[.clones[] | select(.count>0) | {key: .timestamp[0:10], value: .count}] | from_entries' > fresh.json
