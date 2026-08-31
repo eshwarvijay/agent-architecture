@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/eshwarvijay/agent-architecture/master/.github/clones-chart.svg?v=10" alt="plugin downloads over time" width="600">
+  <img src="https://raw.githubusercontent.com/eshwarvijay/agent-architecture/master/.github/clones-chart.svg?v=11" alt="plugin downloads over time" width="600">
 </p>
 
 **A Claude Code skill that turns Claude into an agent-design expert.**
